@@ -31,6 +31,7 @@ const Game = () => {
   const gridSize = searchParams.get("gridSize");
 
   const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const generate = () => {
     const icons = [
@@ -56,7 +57,7 @@ const Game = () => {
 
     const numbersArray = [];
     for (let i = 1; i <= gridSize; i++) {
-      numbersArray.push({ value: i, isFaceUp: true, matched: false });
+      numbersArray.push({ value: i, id: i, isFaceUp: false, matched: false });
     }
 
     const doubledArray = [...numbersArray, ...numbersArray];
@@ -65,7 +66,7 @@ const Game = () => {
       return {
         value: icons[number.value - 1],
         id: index,
-        isFaceUp: true,
+        isFaceUp: false,
         matched: false,
       };
     });
@@ -73,7 +74,12 @@ const Game = () => {
     let finalArray;
 
     if (theme === "numbers") {
-      finalArray = doubledArray;
+      finalArray = doubledArray.map((number, index) => {
+        return {
+          ...number,
+          id: index,
+        };
+      });
     } else {
       finalArray = iconsArray;
     }
@@ -81,12 +87,52 @@ const Game = () => {
     const shuffledArray = finalArray.sort((a, b) => 0.5 - Math.random());
     setCards(shuffledArray);
 
+    console.log(shuffledArray);
+
     return shuffledArray;
   };
 
   useEffect(() => {
     const newCards = generate();
   }, []);
+
+  console.log(cards);
+
+  const handleMatch = (card) => {
+    if (selectedCard === null) {
+      // No card is currently selected, so set the clicked card as the selected card
+      setSelectedCard(card);
+      const updatedCards = cards.map((c) => {
+        if (c.id === card.id) {
+          return { ...c, isFaceUp: true };
+        }
+        return c;
+      });
+      setCards(updatedCards);
+    } else {
+      // A card is already selected, so compare the values
+      if (selectedCard.value === card.value) {
+        // Values match, mark both cards as matched
+        const updatedCards = cards.map((c) => {
+          if (c.id === selectedCard.id || c.id === card.id) {
+            return { ...c, isFaceUp: true, matched: true };
+          }
+          return c;
+        });
+        setCards(updatedCards);
+      } else {
+        // Values don't match, flip both cards face down again
+        const updatedCards = cards.map((c) => {
+          if (c.id === selectedCard.id || c.id === card.id) {
+            return { ...c, isFaceUp: false };
+          }
+          return c;
+        });
+        setCards(updatedCards);
+      }
+      setSelectedCard(null);
+    }
+  };
 
   return (
     <>
@@ -99,14 +145,7 @@ const Game = () => {
       >
         {cards.map((card, index) => (
           <div key={index}>
-            <Card
-              card={card}
-              //   id={card.id}
-              //   value={card.value}
-              //   isFaceUp={card.isFaceUp}
-              //   matched={card.matched}
-              theme={theme}
-            />
+            <Card card={card} theme={theme} handleMatch={handleMatch} />
           </div>
         ))}
       </div>
