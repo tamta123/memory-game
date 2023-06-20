@@ -87,8 +87,6 @@ const Game = () => {
     const shuffledArray = finalArray.sort((a, b) => 0.5 - Math.random());
     setCards(shuffledArray);
 
-    console.log(shuffledArray);
-
     return shuffledArray;
   };
 
@@ -111,25 +109,37 @@ const Game = () => {
       setCards(updatedCards);
     } else {
       // A card is already selected, so compare the values
+      const updatedCards = cards.map((c) => {
+        if (c.id === selectedCard.id || c.id === card.id) {
+          return { ...c, isFaceUp: true };
+        }
+        return c;
+      });
+      setCards(updatedCards);
+
+      // Check if the values of the selected cards match
       if (selectedCard.value === card.value) {
         // Values match, mark both cards as matched
-        const updatedCards = cards.map((c) => {
+        const matchedCards = updatedCards.map((c) => {
           if (c.id === selectedCard.id || c.id === card.id) {
-            return { ...c, isFaceUp: true, matched: true };
+            return { ...c, matched: true };
           }
           return c;
         });
-        setCards(updatedCards);
+        setCards(matchedCards);
       } else {
-        // Values don't match, flip both cards face down again
-        const updatedCards = cards.map((c) => {
-          if (c.id === selectedCard.id || c.id === card.id) {
-            return { ...c, isFaceUp: false };
-          }
-          return c;
-        });
-        setCards(updatedCards);
+        // Values don't match, flip both cards face down
+        setTimeout(() => {
+          const flippedCards = updatedCards.map((c) => {
+            if (c.id === selectedCard.id || c.id === card.id) {
+              return { ...c, isFaceUp: false };
+            }
+            return c;
+          });
+          setCards(flippedCards);
+        }, 2000); // Delay to show the cards for 1 second before flipping back
       }
+
       setSelectedCard(null);
     }
   };
@@ -144,7 +154,7 @@ const Game = () => {
         }
       >
         {cards.map((card, index) => (
-          <div key={index}>
+          <div key={index} className="">
             <Card card={card} theme={theme} handleMatch={handleMatch} />
           </div>
         ))}
@@ -154,3 +164,16 @@ const Game = () => {
 };
 
 export default Game;
+
+// ამის ბექგრაუნდი როგორ გავათეთრო?
+
+// ისფეისაფს მგონი დაყოვნება არ სჭირდება და როგორც არის სწორია
+// აქ მინდა რომ ქლიქები დავთვალო როგორც მუვები და რითერნში ჩავამატო დივად
+// ტაიმერიც უნდა ჩავამატო
+// ბოლო მოდალის გამოტანაც უნდა გავაკეთო
+// კიდე რა დამრჩა სოლო ფლეიერზე?
+
+// ორი შემტრიალებული მინდა ერთდროულად რომ შეინახოს
+//
+
+// გავაკეთო დისეიბლდბათონს სთეითო, პირველ ელსში გავხადო თუ და სეთთაიმაუთში ფალს

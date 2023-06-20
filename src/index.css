@@ -12,3 +12,18 @@ body {
   width: 100vw;
   background-color: #152938;
 }
+
+@layer utilities {
+  .bg-match {
+    animation: color-transition 5s;
+  }
+
+  @keyframes color-transition {
+    0% {
+      background-color: #fda214;
+    }
+    100% {
+      background-color: #bcced9;
+    }
+  }
+}
