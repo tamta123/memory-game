@@ -18,8 +18,8 @@ const SetupPage = () => {
   };
 
   return (
-    <div>
-      <h1 className="text-center text-white font-bold text-3xl mt-20 mb-11 mx-[127px]">
+    <div className="h-[100vh] w-full bg-[#152938]">
+      <h1 className="text-center text-white font-bold text-3xl pt-20 mb-11 mx-[127px]">
         memory
       </h1>
       <div className="bg-white rounded-[10px] mx-6 p-6">

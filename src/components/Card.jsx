@@ -10,7 +10,7 @@ const Card = ({ card, theme, handleMatch }) => {
     <div>
       {theme === "numbers" ? (
         <div
-          className={`aspect-square rounded-[59px] bg-[#BCCED9] text-center font-bold text-2xl leading-10  text-white card ${
+          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center font-bold text-2xl leading-10  text-white card ${
             card.matched ? "bg-match " : ""
           }`}
         >
@@ -25,7 +25,7 @@ const Card = ({ card, theme, handleMatch }) => {
         </div>
       ) : (
         <div
-          className={`aspect-square rounded-[59px] bg-[#BCCED9] text-center card ${
+          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center card ${
             card.matched ? "bg-match" : ""
           }`}
         >
@@ -47,6 +47,8 @@ const Card = ({ card, theme, handleMatch }) => {
 };
 
 export default Card;
+
+// ქარდის აითემების ზომა სქეილით უნდა შევცვალო გრიდ საიზის შესაბამისად
 
 // აითემები ქარდის შუაში როგორ მოვაქციო? ნამბერებზე თრანსლეითი რატო არ მუშაობს, სქეილი აიქონებზე
 
