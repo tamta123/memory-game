@@ -10,9 +10,7 @@ const Card = ({ card, theme, handleMatch }) => {
     <div>
       {theme === "numbers" ? (
         <div
-          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center font-bold text-2xl leading-10  text-white card ${
-            card.matched ? "bg-match " : ""
-          }`}
+          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center font-bold text-2xl leading-10  text-white card `}
         >
           {card.isFaceUp ? (
             <span className="translate-y-[120%]">{card.value}</span>
@@ -25,9 +23,7 @@ const Card = ({ card, theme, handleMatch }) => {
         </div>
       ) : (
         <div
-          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center card ${
-            card.matched ? "bg-match" : ""
-          }`}
+          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center card`}
         >
           {card.isFaceUp ? (
             <FontAwesomeIcon

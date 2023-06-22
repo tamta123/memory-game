@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Card from "./Card";
+import MenuModal from "./MenuModal";
+// import Timer from "./Timer";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTree,
@@ -22,6 +24,7 @@ import {
   faLaptopFile,
   faFire,
 } from "@fortawesome/free-solid-svg-icons";
+import Timer from "./Timer";
 
 const Game = () => {
   const location = useLocation();
@@ -34,6 +37,9 @@ const Game = () => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [disableButtons, setDisableButtons] = useState(false);
   const [moveCount, setMoveCount] = useState(0);
+  const [timerStarted, setTimerStarted] = useState(false);
+  const [allMatched, setAllMatched] = useState(false); // Declare allMatched state
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const generate = () => {
     const icons = [
@@ -99,6 +105,9 @@ const Game = () => {
   console.log(cards);
 
   const handleMatch = (card) => {
+    if (!timerStarted) {
+      setTimerStarted(true);
+    }
     if (disableButtons) {
       // Disable clicking on cards while the delay is in progress
       return;
@@ -153,6 +162,14 @@ const Game = () => {
       setMoveCount((count) => count + 1); // Increment the move count
     }
   };
+  useEffect(() => {
+    const isAllMatched = cards.every((c) => c.matched);
+    console.log(isAllMatched);
+    if (isAllMatched) {
+      setTimerStarted(false);
+    }
+    setAllMatched(isAllMatched);
+  }, [cards]);
 
   return (
     <>
@@ -160,9 +177,12 @@ const Game = () => {
         <h1 className="font-bold text-xl leading-7 text-center text-[#152938]">
           memory
         </h1>
-        <span className=" bg-[#FDA214] rounded-[26px] px-5 py-3 font-bold text-base leading-5 text-center text-white">
+        <button
+          className=" bg-[#FDA214] rounded-[26px] px-5 py-3 font-bold text-base leading-5 text-center text-white"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
           menu
-        </span>
+        </button>
       </div>
       <div
         className={
@@ -183,7 +203,7 @@ const Game = () => {
             Time
           </span>
           <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
-            {}
+            {timerStarted && <Timer />}
           </span>
         </div>
         <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
@@ -195,6 +215,17 @@ const Game = () => {
           </span>
         </div>
       </div>
+      {isMenuOpen && (
+        <MenuModal
+          generate={generate}
+          setCards={setCards}
+          setSelectedCard={setSelectedCard}
+          setDisableButtons={setDisableButtons}
+          setMoveCount={setMoveCount}
+          setTimerStarted={setTimerStarted}
+          setAllMatched={setAllMatched}
+        />
+      )}
     </>
   );
 };
