@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Card from "./Card";
 import MenuModal from "./MenuModal";
-// import Timer from "./Timer";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FinishModal from "./FinishModal";
 import {
   faTree,
   faStar,
@@ -203,7 +202,7 @@ const Game = () => {
             Time
           </span>
           <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
-            {timerStarted && <Timer />}
+            {timerStarted ? <Timer /> : "00:00"}
           </span>
         </div>
         <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
@@ -225,6 +224,17 @@ const Game = () => {
           setTimerStarted={setTimerStarted}
           setAllMatched={setAllMatched}
           setIsMenuOpen={setIsMenuOpen}
+        />
+      )}
+      {allMatched && (
+        <FinishModal
+          generate={generate}
+          setCards={setCards}
+          setSelectedCard={setSelectedCard}
+          setDisableButtons={setDisableButtons}
+          setMoveCount={setMoveCount}
+          setTimerStarted={setTimerStarted}
+          moveCount={moveCount}
         />
       )}
     </>
