@@ -9,9 +9,8 @@ const MenuModal = ({
   setMoveCount,
   setTimerStarted,
   setAllMatched,
+  setIsMenuOpen,
 }) => {
-  const [modalOpen, setModalOpen] = useState(false); // Track modal visibility
-
   const navigate = useNavigate();
 
   const handleRestart = () => {
@@ -23,14 +22,16 @@ const MenuModal = ({
     setMoveCount(0);
     setTimerStarted(false);
     setAllMatched(false);
-    setModalOpen(false); // Close the modal
+    setIsMenuOpen(false); // Close the modal
   };
 
   const handleNewGame = () => {
     navigate("/");
   };
 
-  const handleResumeGame = () => {};
+  const handleResumeGame = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <>

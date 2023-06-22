@@ -224,6 +224,7 @@ const Game = () => {
           setMoveCount={setMoveCount}
           setTimerStarted={setTimerStarted}
           setAllMatched={setAllMatched}
+          setIsMenuOpen={setIsMenuOpen}
         />
       )}
     </>
