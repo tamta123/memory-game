@@ -192,7 +192,12 @@ const Game = () => {
       >
         {cards.map((card, index) => (
           <div key={index} className="">
-            <Card card={card} theme={theme} handleMatch={handleMatch} />
+            <Card
+              card={card}
+              theme={theme}
+              handleMatch={handleMatch}
+              gridSize={gridSize}
+            />
           </div>
         ))}
       </div>

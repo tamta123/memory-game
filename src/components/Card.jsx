@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Card = ({ card, theme, handleMatch }) => {
+const Card = ({ card, theme, handleMatch, gridSize }) => {
   const handleClick = () => {
     handleMatch(card);
     console.log(card);
@@ -10,31 +10,37 @@ const Card = ({ card, theme, handleMatch }) => {
     <div>
       {theme === "numbers" ? (
         <div
-          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center font-bold text-2xl leading-10  text-white card `}
+          className={`flex justify-center aspect-square rounded-[59px] bg-[#FDA214] text-center font-bold text-2xl leading-10  text-white card `}
+          onClick={handleClick}
         >
           {card.isFaceUp ? (
-            <span className="translate-y-[120%]">{card.value}</span>
+            <span
+              className={`${
+                +gridSize === 18 ? "text-xl leading-10" : "text-2xl"
+              } flex justify-center items-center`}
+            >
+              {card.value}
+            </span>
           ) : (
-            <div
-              className="aspect-square rounded-[59px] bg-[#304859]"
-              onClick={handleClick}
-            ></div>
+            <div className={`aspect-square rounded-[59px] bg-[#304859] `}></div>
           )}
         </div>
       ) : (
         <div
-          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center card`}
+          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center card `}
+          onClick={handleClick}
         >
           {card.isFaceUp ? (
             <FontAwesomeIcon
-              className="scale-[1.5] translate-y-[120%]"
+              className={`${
+                +gridSize === 18
+                  ? "scale-[2] translate-y-[120%]"
+                  : "translate-y-[50%]"
+              }`}
               icon={card.value}
             />
           ) : (
-            <div
-              className=" aspect-square rounded-[59px] bg-[#304859]"
-              onClick={handleClick}
-            ></div>
+            <div className={`aspect-square rounded-[59px] bg-[#304859] `}></div>
           )}
         </div>
       )}
@@ -43,9 +49,3 @@ const Card = ({ card, theme, handleMatch }) => {
 };
 
 export default Card;
-
-// ქარდის აითემების ზომა სქეილით უნდა შევცვალო გრიდ საიზის შესაბამისად
-
-// აითემები ქარდის შუაში როგორ მოვაქციო? ნამბერებზე თრანსლეითი რატო არ მუშაობს, სქეილი აიქონებზე
-
-// არც მეჩდ ქარდების ქალარ თრანზიშენი მომწონს, იმიტომ რომ მინდა სანამ ახალს დავაქლიქებ მანამდე იყოს ორინჯ და მერე გახდეს
