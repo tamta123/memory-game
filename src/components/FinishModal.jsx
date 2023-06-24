@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import useTimer from "./useTimer";
 
 const FinishModal = ({
   generate,
@@ -9,7 +10,10 @@ const FinishModal = ({
   setTimerStarted,
   setAllMatched,
   moveCount,
+  allMatched,
 }) => {
+  const { minutes, seconds, finished } = useTimer(allMatched);
+
   const navigate = useNavigate();
 
   const handleRestart = () => {
@@ -27,6 +31,13 @@ const FinishModal = ({
   const handleNewGame = () => {
     navigate("/");
   };
+
+  const timeDuration = finished
+    ? `${minutes.toString().padStart(2, "0")}:${seconds
+        .toString()
+        .padStart(2, "0")}`
+    : "00:00";
+
   return (
     <>
       <div className="fixed left-0 top-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center">
@@ -42,7 +53,9 @@ const FinishModal = ({
               <span className="text-[#7191A5] text-sm font-bold">
                 Time Elapsed
               </span>
-              <div className="text-[#304859] text-[20px] font-bold">number</div>
+              <div className="text-[#304859] text-[20px] font-bold">
+                {finished && <div>{timeDuration}</div>}
+              </div>
             </div>
             <div className="flex justify-between items-center bg-[#DFE7EC] rounded-[5px] w-full h-12 px-4 py-[11px] mb-3">
               <span className="text-[#7191A5] text-sm font-bold">

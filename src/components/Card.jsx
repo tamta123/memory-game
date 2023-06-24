@@ -9,40 +9,67 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
   return (
     <div>
       {theme === "numbers" ? (
-        <div
-          className={`flex justify-center aspect-square rounded-[59px] bg-[#FDA214] text-center font-bold text-2xl leading-10  text-white card `}
-          onClick={handleClick}
-        >
-          {card.isFaceUp ? (
-            <span
-              className={`${
-                +gridSize === 18 ? "text-xl leading-10" : "text-2xl"
-              } flex justify-center items-center`}
+        card.isFaceUp ? (
+          <div
+            className={`flex justify-center aspect-square rounded-[59px]  text-center font-bold text-2xl leading-10 text-white card ${
+              +gridSize === 18 ? "text-xl leading-10" : "text-2xl"
+            } 
+            ${
+              card.matched ? "bg-[#BCCED9]" : "bg-[#FDA214]"
+            } flex justify-center items-center`}
+            style={{
+              transform: "rotateY(180deg)",
+              transition: "all 0.2s ease-in 0s",
+            }}
+          >
+            <div
+              style={{
+                transform: "rotateY(-180deg)",
+                transition: "all 0.2s ease-in 0s",
+              }}
             >
               {card.value}
-            </span>
-          ) : (
-            <div className={`aspect-square rounded-[59px] bg-[#304859] `}></div>
-          )}
+            </div>
+          </div>
+        ) : (
+          <div
+            className={`flex justify-center text-center font-bold text-2xl leading-10 text-white aspect-square rounded-[59px] bg-[#304859] `}
+            style={{
+              transition: "all 0.2s ease-in 0.2s",
+              transform: "rotateY(0deg)",
+            }}
+            onClick={handleClick}
+          ></div>
+        )
+      ) : card.isFaceUp ? (
+        <div
+          className={`flex justify-center font-bold text-2xl leading-10 aspect-square rounded-[59px] text-center card  ${
+            card.matched ? "bg-[#BCCED9]" : "bg-[#FDA214]"
+          }`}
+          style={{
+            transform: "rotateY(180deg)",
+            transition: "all 0.2s ease-in 0s",
+          }}
+        >
+          <FontAwesomeIcon
+            className={` 
+           ${
+             +gridSize === 8
+               ? "scale-[1.5] translate-y-[100%]"
+               : "scale-[0.9] translate-y-[40%]"
+           }`}
+            icon={card.value}
+          />
         </div>
       ) : (
         <div
-          className={`aspect-square rounded-[59px] bg-[#FDA214] text-center card `}
+          className={`aspect-square rounded-[59px] bg-[#304859] `}
           onClick={handleClick}
-        >
-          {card.isFaceUp ? (
-            <FontAwesomeIcon
-              className={`${
-                +gridSize === 18
-                  ? "scale-[2] translate-y-[120%]"
-                  : "translate-y-[50%]"
-              }`}
-              icon={card.value}
-            />
-          ) : (
-            <div className={`aspect-square rounded-[59px] bg-[#304859] `}></div>
-          )}
-        </div>
+          style={{
+            transition: "all 0.2s ease-in 0.2s",
+            transform: "rotateY(0deg)",
+          }}
+        ></div>
       )}
     </div>
   );

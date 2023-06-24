@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Timer = () => {
+const useTimer = (isAllMatched) => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(1);
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
     let intervalId = null;
@@ -25,14 +26,12 @@ const Timer = () => {
       setMinutes((prevMinutes) => prevMinutes + 1);
       setSeconds(0);
     }
-  }, [seconds]);
+    if (isAllMatched) {
+      setFinished(true);
+    }
+  }, [minutes, seconds]);
 
-  return (
-    <div className="timer">
-      {minutes.toString().padStart(2, "0")}:
-      {seconds.toString().padStart(2, "0")}
-    </div>
-  );
+  return { minutes, seconds, finished };
 };
 
-export default Timer;
+export default useTimer;
