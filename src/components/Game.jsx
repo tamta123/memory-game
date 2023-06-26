@@ -30,7 +30,6 @@ const Game = () => {
   const searchParams = new URLSearchParams(location.search);
   const theme = searchParams.get("theme");
   const playerMode = searchParams.get("playerMode");
-  // console.log(playerMode);
   const gridSize = searchParams.get("gridSize");
 
   const [cards, setCards] = useState([]);
@@ -40,9 +39,9 @@ const Game = () => {
   const [timerStarted, setTimerStarted] = useState(false);
   const [allMatched, setAllMatched] = useState(false); // Declare allMatched state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [players, setPlayers] = useState([]);
+
   const { minutes, seconds, finished } = useTimer(allMatched);
-  const [currentParticipant, setCurrentParticipant] = useState(0); // Track the current participant
-  const [participants, setParticipants] = useState([]); // Store participant information
 
   const generate = () => {
     const icons = [
@@ -105,15 +104,25 @@ const Game = () => {
     const newCards = generate();
   }, []);
 
-  const playerCount = parseInt(playerMode); // Parse the playerMode value as an integer
-
-  const players = Array.from({ length: playerCount }, (_, index) => ({
-    title: `Player ${index + 1}`,
-    matched: 0,
-    active: index === 0,
-  }));
+  useEffect(() => {
+    const initialPlayers = Array.from({ length: playerMode }, (_, index) => ({
+      title: `Player ${index + 1}`,
+      matched: 0,
+      active: index === 0,
+    }));
+    setPlayers(initialPlayers);
+  }, [playerMode]);
+  console.log(players);
 
   const handleMatch = (card) => {
+    if (playerMode <= 1) {
+      handleSingleMatch(card);
+    } else {
+      handleMultiPlayerMatch(card);
+    }
+  };
+
+  const handleSingleMatch = (card) => {
     if (!timerStarted) {
       setTimerStarted(true);
     }
@@ -166,11 +175,99 @@ const Game = () => {
           setDisableButtons(false); // Enable clicking on cards after the delay
         }, 1000); // Delay to show the cards for 0.5 second before flipping back
       }
-
       setSelectedCard(null);
       setMoveCount((count) => count + 1); // Increment the move count
     }
   };
+  const handleMultiPlayerMatch = (card) => {
+    if (disableButtons) {
+      // Disable clicking on cards while the delay is in progress
+      return;
+    }
+    if (selectedCard === null) {
+      // No card is currently selected, so set the clicked card as the selected card
+      setSelectedCard(card);
+      const updatedCards = cards.map((c) => {
+        if (c.id === card.id) {
+          return { ...c, isFaceUp: true };
+        }
+        return c;
+      });
+      setCards(updatedCards);
+    } else {
+      // A card is already selected, so compare the values
+      const updatedCards = cards.map((c) => {
+        if (c.id === selectedCard.id || c.id === card.id) {
+          return { ...c, isFaceUp: true };
+        }
+        return c;
+      });
+      setCards(updatedCards);
+
+      // Check if the values of the selected cards match
+      if (selectedCard.value === card.value) {
+        // Values match, mark both cards as matched
+        const matchedCards = updatedCards.map((c) => {
+          if (c.id === selectedCard.id || c.id === card.id) {
+            return { ...c, matched: true };
+          }
+          return c;
+        });
+        setCards(matchedCards);
+      } else {
+        setDisableButtons(true); // Disable clicking on cards
+
+        // Values don't match, flip both cards face down
+        setTimeout(() => {
+          const flippedCards = updatedCards.map((c) => {
+            if (c.id === selectedCard.id || c.id === card.id) {
+              return { ...c, isFaceUp: false };
+            }
+            return c;
+          });
+          setCards(flippedCards);
+          setDisableButtons(false); // Enable clicking on cards after the delay
+        }, 1000); // Delay to show the cards for 0.5 second before flipping back
+      }
+    }
+
+    const updatePlayers = players.map((player, index) => {
+      if (player.active) {
+        return { ...player, matched: player.matched + 1 };
+      }
+      return player;
+    });
+    setPlayers(updatePlayers);
+
+    setSelectedCard(null);
+    setMoveCount((count) => count + 1); // Increment the move count
+
+    // Find the active participant
+    const activeParticipant = players.find((participant) => participant.active);
+
+    if (selectedCard === null) {
+      console.log(card, "tone");
+      setSelectedCard(card);
+      console.log(selectedCard, "giorgi");
+    }
+
+    // Increment the match count for the active participant if the values match
+    const updatedParticipants = players.map((participant) => {
+      if (participant === activeParticipant) {
+        console.log(selectedCard, card, "tamta");
+        if (selectedCard.value === card.value) {
+          return {
+            ...participant,
+            matched: participant.matched + 1,
+          };
+        } else {
+          console.log(activeParticipant);
+        }
+      }
+      return participant;
+    });
+  };
+
   useEffect(() => {
     const isAllMatched = cards.every((c) => c.matched);
     console.log(isAllMatched);
@@ -283,9 +380,3 @@ const Game = () => {
 };
 
 export default Game;
-
-// ტაიმერიც უნდა ჩავამატო
-// ბოლო მოდალის გამოტანაც უნდა გავაკეთო
-// მალთიფლ ფლეირზე მუვებიც უნდა ითვალოს რომ მიხვდეს რომელმა დამეჩა
-// ობიექტს შევქმნი ფლეიერისას {თაითლი: ფლეიერ 1, მეჩი რამდენი აქვს, აქტიური არის თუ არა }
-// ფლეიერების ერეაის დინამურად სადაც მექნებოდა ფლეიერების ობიექტები, (for each)

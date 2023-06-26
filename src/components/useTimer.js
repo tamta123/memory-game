@@ -20,6 +20,7 @@ const useTimer = (isAllMatched) => {
       clearInterval(intervalId);
     };
   }, []);
+  console.log("tamta");
 
   useEffect(() => {
     if (seconds === 60) {
