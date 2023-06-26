@@ -30,6 +30,7 @@ const Game = () => {
   const searchParams = new URLSearchParams(location.search);
   const theme = searchParams.get("theme");
   const playerMode = searchParams.get("playerMode");
+  // console.log(playerMode);
   const gridSize = searchParams.get("gridSize");
 
   const [cards, setCards] = useState([]);
@@ -40,6 +41,8 @@ const Game = () => {
   const [allMatched, setAllMatched] = useState(false); // Declare allMatched state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { minutes, seconds, finished } = useTimer(allMatched);
+  const [currentParticipant, setCurrentParticipant] = useState(0); // Track the current participant
+  const [participants, setParticipants] = useState([]); // Store participant information
 
   const generate = () => {
     const icons = [
@@ -102,7 +105,13 @@ const Game = () => {
     const newCards = generate();
   }, []);
 
-  console.log(cards);
+  const playerCount = parseInt(playerMode); // Parse the playerMode value as an integer
+
+  const players = Array.from({ length: playerCount }, (_, index) => ({
+    title: `Player ${index + 1}`,
+    matched: 0,
+    active: index === 0,
+  }));
 
   const handleMatch = (card) => {
     if (!timerStarted) {
@@ -202,31 +211,50 @@ const Game = () => {
           </div>
         ))}
       </div>
-      <div className="flex gap-6 px-6 pb-6 pt-[102px]">
-        <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
-          <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
-            Time
-          </span>
-          <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
-            {timerStarted ? (
-              <div className="">
-                {minutes.toString().padStart(2, "0")}:
-                {seconds.toString().padStart(2, "0")}
-              </div>
-            ) : (
-              "00:00"
-            )}
-          </span>
+      {playerMode <= 1 ? (
+        <div className="flex gap-6 px-6 pb-6 pt-[102px]">
+          <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
+            <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
+              Time
+            </span>
+            <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
+              {timerStarted ? (
+                <div className="">
+                  {minutes.toString().padStart(2, "0")}:
+                  {seconds.toString().padStart(2, "0")}
+                </div>
+              ) : (
+                "00:00"
+              )}
+            </span>
+          </div>
+          <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
+            <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
+              Moves
+            </span>
+            <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
+              {moveCount}
+            </span>
+          </div>
         </div>
-        <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
-          <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
-            Moves
-          </span>
-          <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
-            {moveCount}
-          </span>
+      ) : (
+        // Render the player information for multiplayer mode
+        <div className="flex gap-6 px-6 pb-6 pt-[102px]">
+          {players.map((player, index) => (
+            <div
+              key={index}
+              className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]"
+            >
+              <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
+                P {index + 1}
+              </span>
+              <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
+                {player.matched}
+              </span>
+            </div>
+          ))}
         </div>
-      </div>
+      )}
       {isMenuOpen && (
         <MenuModal
           generate={generate}
@@ -258,3 +286,6 @@ export default Game;
 
 // ტაიმერიც უნდა ჩავამატო
 // ბოლო მოდალის გამოტანაც უნდა გავაკეთო
+// მალთიფლ ფლეირზე მუვებიც უნდა ითვალოს რომ მიხვდეს რომელმა დამეჩა
+// ობიექტს შევქმნი ფლეიერისას {თაითლი: ფლეიერ 1, მეჩი რამდენი აქვს, აქტიური არის თუ არა }
+// ფლეიერების ერეაის დინამურად სადაც მექნებოდა ფლეიერების ობიექტები, (for each)

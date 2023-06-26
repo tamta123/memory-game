@@ -31,12 +31,13 @@ const FinishModal = ({
   const handleNewGame = () => {
     navigate("/");
   };
+  console.log(finished);
 
   const timeDuration = finished
     ? `${minutes.toString().padStart(2, "0")}:${seconds
         .toString()
         .padStart(2, "0")}`
-    : "00:00";
+    : "tamta";
 
   return (
     <>
