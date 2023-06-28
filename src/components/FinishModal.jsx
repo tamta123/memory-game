@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import useTimer from "./useTimer";
 
 const FinishModal = ({
   generate,
@@ -10,10 +9,12 @@ const FinishModal = ({
   setTimerStarted,
   setAllMatched,
   moveCount,
-  allMatched,
+  // allMatched,
   stopTimer,
   minutes,
   seconds,
+  setIsMenuOpen,
+  restartTimer,
 }) => {
   const navigate = useNavigate();
 
@@ -27,6 +28,7 @@ const FinishModal = ({
     setTimerStarted(false);
     setAllMatched(false);
     setIsMenuOpen(false); // Close the modal
+    restartTimer();
   };
 
   const handleNewGame = () => {

@@ -9,6 +9,8 @@ const MenuModal = ({
   setTimerStarted,
   setAllMatched,
   setIsMenuOpen,
+  restartTimer,
+  resumeTimer,
 }) => {
   const navigate = useNavigate();
 
@@ -22,6 +24,7 @@ const MenuModal = ({
     setTimerStarted(false);
     setAllMatched(false);
     setIsMenuOpen(false); // Close the modal
+    restartTimer();
   };
 
   const handleNewGame = () => {
@@ -30,6 +33,7 @@ const MenuModal = ({
 
   const handleResumeGame = () => {
     setIsMenuOpen(false);
+    resumeTimer();
   };
 
   return (

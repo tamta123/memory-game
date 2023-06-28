@@ -42,7 +42,8 @@ const Game = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [players, setPlayers] = useState([]);
 
-  const { minutes, seconds, finished, stopTimer } = useTimer(allMatched);
+  const { minutes, seconds, finished, stopTimer, restartTimer, resumeTimer } =
+    useTimer(allMatched);
 
   const generate = () => {
     const icons = [
@@ -113,7 +114,6 @@ const Game = () => {
     }));
     setPlayers(initialPlayers);
   }, [playerMode]);
-  console.log(players);
 
   const handleMatch = (card) => {
     if (playerMode <= 1) {
@@ -206,6 +206,7 @@ const Game = () => {
         return c;
       });
       setCards(updatedCards);
+      //comment
 
       // Check if the values of the selected cards match
       if (selectedCard.value === card.value) {
@@ -248,8 +249,6 @@ const Game = () => {
 
       // Switch the active participant
       setPlayers((prevPlayers) => {
-        console.log(players);
-
         const activeParticipantIndex = prevPlayers.findIndex(
           (participant) => participant.active
         );
@@ -271,7 +270,6 @@ const Game = () => {
 
   useEffect(() => {
     const isAllMatched = cards.every((c) => c.matched);
-    console.log(isAllMatched);
     if (isAllMatched) {
       setTimerStarted(false);
     }
@@ -286,7 +284,10 @@ const Game = () => {
         </h1>
         <button
           className=" bg-[#FDA214] rounded-[26px] px-5 py-3 font-bold text-base leading-5 text-center text-white"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          onClick={() => {
+            setIsMenuOpen(!isMenuOpen);
+            stopTimer();
+          }}
         >
           menu
         </button>
@@ -373,6 +374,9 @@ const Game = () => {
           setTimerStarted={setTimerStarted}
           setAllMatched={setAllMatched}
           setIsMenuOpen={setIsMenuOpen}
+          stopTimer={stopTimer}
+          restartTimer={restartTimer}
+          resumeTimer={resumeTimer}
         />
       )}
       {allMatched && playerMode == 1 && (
@@ -388,8 +392,11 @@ const Game = () => {
           seconds={seconds}
           stopTimer={stopTimer}
           setAllMatched={setAllMatched}
+          setIsMenuOpen={setIsMenuOpen}
+          restartTimer={restartTimer}
         />
       )}
+
       {allMatched && playerMode > 1 && (
         <MultiPlayerGameOver
           players={players}
