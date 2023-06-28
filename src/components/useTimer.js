@@ -1,15 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
-const useTimer = (isAllMatched) => {
+const useTimer = (allMatched) => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(1);
   const [finished, setFinished] = useState(false);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    let intervalId = null;
-
     const startTimer = () => {
-      intervalId = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setSeconds((prevSeconds) => prevSeconds + 1);
       }, 1000);
     };
@@ -17,22 +16,26 @@ const useTimer = (isAllMatched) => {
     startTimer();
 
     return () => {
-      clearInterval(intervalId);
+      clearInterval(intervalRef.current);
     };
   }, []);
-  console.log("tamta");
 
   useEffect(() => {
     if (seconds === 60) {
       setMinutes((prevMinutes) => prevMinutes + 1);
       setSeconds(0);
     }
-    if (isAllMatched) {
+    if (allMatched) {
       setFinished(true);
+      clearInterval(intervalRef.current);
     }
-  }, [minutes, seconds]);
+  }, [minutes, seconds, allMatched]);
 
-  return { minutes, seconds, finished };
+  const stopTimer = () => {
+    clearInterval(intervalRef.current);
+  };
+
+  return { minutes, seconds, finished, stopTimer };
 };
 
 export default useTimer;

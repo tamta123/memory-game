@@ -11,9 +11,10 @@ const FinishModal = ({
   setAllMatched,
   moveCount,
   allMatched,
+  stopTimer,
+  minutes,
+  seconds,
 }) => {
-  const { minutes, seconds, finished } = useTimer(allMatched);
-
   const navigate = useNavigate();
 
   const handleRestart = () => {
@@ -31,13 +32,8 @@ const FinishModal = ({
   const handleNewGame = () => {
     navigate("/");
   };
-  console.log(finished);
 
-  const timeDuration = finished
-    ? `${minutes.toString().padStart(2, "0")}:${seconds
-        .toString()
-        .padStart(2, "0")}`
-    : "tamta";
+  stopTimer(); // Call stopTimer to get the minutes and seconds
 
   return (
     <>
@@ -55,7 +51,10 @@ const FinishModal = ({
                 Time Elapsed
               </span>
               <div className="text-[#304859] text-[20px] font-bold">
-                {finished && <div>{timeDuration}</div>}
+                <div className="">
+                  {minutes.toString().padStart(2, "0")}:
+                  {seconds.toString().padStart(2, "0")}
+                </div>
               </div>
             </div>
             <div className="flex justify-between items-center bg-[#DFE7EC] rounded-[5px] w-full h-12 px-4 py-[11px] mb-3">

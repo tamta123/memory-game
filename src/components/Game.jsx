@@ -4,6 +4,7 @@ import Card from "./Card";
 import MenuModal from "./MenuModal";
 import FinishModal from "./FinishModal";
 import useTimer from "./useTimer";
+import MultiPlayerGameOver from "./MultiPlayerGameOver.jsx";
 import {
   faTree,
   faStar,
@@ -41,7 +42,7 @@ const Game = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [players, setPlayers] = useState([]);
 
-  const { minutes, seconds, finished } = useTimer(allMatched);
+  const { minutes, seconds, finished, stopTimer } = useTimer(allMatched);
 
   const generate = () => {
     const icons = [
@@ -179,11 +180,13 @@ const Game = () => {
       setMoveCount((count) => count + 1); // Increment the move count
     }
   };
+
   const handleMultiPlayerMatch = (card) => {
     if (disableButtons) {
       // Disable clicking on cards while the delay is in progress
       return;
     }
+
     if (selectedCard === null) {
       // No card is currently selected, so set the clicked card as the selected card
       setSelectedCard(card);
@@ -214,6 +217,16 @@ const Game = () => {
           return c;
         });
         setCards(matchedCards);
+
+        // Update the match count for the active player
+        setPlayers((prevPlayers) => {
+          return prevPlayers.map((player) => {
+            if (player.active) {
+              return { ...player, matched: player.matched + 1 };
+            }
+            return player;
+          });
+        });
       } else {
         setDisableButtons(true); // Disable clicking on cards
 
@@ -227,45 +240,33 @@ const Game = () => {
           });
           setCards(flippedCards);
           setDisableButtons(false); // Enable clicking on cards after the delay
-        }, 1000); // Delay to show the cards for 0.5 second before flipping back
+        }, 1000); // Delay to show the cards for 1 second before flipping back
       }
+
+      setSelectedCard(null);
+      setMoveCount((count) => count + 1); // Increment the move count
+
+      // Switch the active participant
+      setPlayers((prevPlayers) => {
+        console.log(players);
+
+        const activeParticipantIndex = prevPlayers.findIndex(
+          (participant) => participant.active
+        );
+        const nextParticipantIndex =
+          (activeParticipantIndex + 1) % prevPlayers.length;
+        return prevPlayers.map((participant, index) => {
+          if (index === activeParticipantIndex) {
+            return { ...participant, active: false };
+          }
+          if (index === nextParticipantIndex) {
+            return { ...participant, active: true };
+          }
+
+          return participant;
+        });
+      });
     }
-
-    const updatePlayers = players.map((player, index) => {
-      if (player.active) {
-        return { ...player, matched: player.matched + 1 };
-      }
-      return player;
-    });
-    setPlayers(updatePlayers);
-
-    setSelectedCard(null);
-    setMoveCount((count) => count + 1); // Increment the move count
-
-    // Find the active participant
-    const activeParticipant = players.find((participant) => participant.active);
-
-    if (selectedCard === null) {
-      console.log(card, "tone");
-      setSelectedCard(card);
-      console.log(selectedCard, "giorgi");
-    }
-
-    // Increment the match count for the active participant if the values match
-    const updatedParticipants = players.map((participant) => {
-      if (participant === activeParticipant) {
-        console.log(selectedCard, card, "tamta");
-        if (selectedCard.value === card.value) {
-          return {
-            ...participant,
-            matched: participant.matched + 1,
-          };
-        } else {
-          console.log(activeParticipant);
-        }
-      }
-      return participant;
-    });
   };
 
   useEffect(() => {
@@ -336,16 +337,26 @@ const Game = () => {
         </div>
       ) : (
         // Render the player information for multiplayer mode
-        <div className="flex gap-6 px-6 pb-6 pt-[102px]">
+        <div className={`flex gap-6 px-6 pb-6 pt-[102px]  `}>
           {players.map((player, index) => (
             <div
               key={index}
-              className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]"
+              className={`flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px] ${
+                player.active ? "bg-[#FDA214] text-[#ffffff]" : "bg-[#DFE7EC]"
+              }`}
             >
-              <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
+              <span
+                className={`font-bold text-base leading-normal text-center  ${
+                  player.active ? " text-[#ffffff]" : "text-[#7191A5]"
+                }`}
+              >
                 P {index + 1}
               </span>
-              <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
+              <span
+                className={`font-bold text-2xl leading-7 text-center  ${
+                  player.active ? " text-[#ffffff]" : "text-[#304859]"
+                }`}
+              >
                 {player.matched}
               </span>
             </div>
@@ -364,7 +375,7 @@ const Game = () => {
           setIsMenuOpen={setIsMenuOpen}
         />
       )}
-      {allMatched && (
+      {allMatched && playerMode == 1 && (
         <FinishModal
           generate={generate}
           setCards={setCards}
@@ -373,6 +384,23 @@ const Game = () => {
           setMoveCount={setMoveCount}
           setTimerStarted={setTimerStarted}
           moveCount={moveCount}
+          minutes={minutes}
+          seconds={seconds}
+          stopTimer={stopTimer}
+          setAllMatched={setAllMatched}
+        />
+      )}
+      {allMatched && playerMode > 1 && (
+        <MultiPlayerGameOver
+          players={players}
+          generate={generate}
+          setCards={setCards}
+          setSelectedCard={setSelectedCard}
+          setDisableButtons={setDisableButtons}
+          setMoveCount={setMoveCount}
+          setTimerStarted={setTimerStarted}
+          setAllMatched={setAllMatched}
+          setIsMenuOpen={setIsMenuOpen}
         />
       )}
     </>
@@ -380,3 +408,5 @@ const Game = () => {
 };
 
 export default Game;
+
+// for shuffle array https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
