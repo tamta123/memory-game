@@ -206,7 +206,6 @@ const Game = () => {
         return c;
       });
       setCards(updatedCards);
-      //comment
 
       // Check if the values of the selected cards match
       if (selectedCard.value === card.value) {
@@ -248,23 +247,25 @@ const Game = () => {
       setMoveCount((count) => count + 1); // Increment the move count
 
       // Switch the active participant
-      setPlayers((prevPlayers) => {
-        const activeParticipantIndex = prevPlayers.findIndex(
-          (participant) => participant.active
-        );
-        const nextParticipantIndex =
-          (activeParticipantIndex + 1) % prevPlayers.length;
-        return prevPlayers.map((participant, index) => {
-          if (index === activeParticipantIndex) {
-            return { ...participant, active: false };
-          }
-          if (index === nextParticipantIndex) {
-            return { ...participant, active: true };
-          }
+      if (selectedCard.value !== card.value) {
+        setPlayers((prevPlayers) => {
+          const activeParticipantIndex = prevPlayers.findIndex(
+            (participant) => participant.active
+          );
+          const nextParticipantIndex =
+            (activeParticipantIndex + 1) % prevPlayers.length;
+          return prevPlayers.map((participant, index) => {
+            if (index === activeParticipantIndex) {
+              return { ...participant, active: false };
+            }
+            if (index === nextParticipantIndex) {
+              return { ...participant, active: true };
+            }
 
-          return participant;
+            return participant;
+          });
         });
-      });
+      }
     }
   };
 

@@ -11,8 +11,8 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
       {theme === "numbers" ? (
         card.isFaceUp ? (
           <div
-            className={`flex justify-center aspect-square rounded-[59px]  text-center font-bold text-2xl leading-10 text-white card ${
-              +gridSize === 18 ? "text-xl leading-10" : "text-2xl"
+            className={`flex justify-center aspect-square rounded-[59px]  text-center font-bold text-2xl text-white card ${
+              +gridSize === 18 ? "text-xl " : "text-2xl leading-10"
             } 
             ${
               card.matched ? "bg-[#BCCED9]" : "bg-[#FDA214]"
@@ -33,7 +33,7 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
           </div>
         ) : (
           <div
-            className={`flex justify-center text-center font-bold text-2xl leading-10 text-white aspect-square rounded-[59px] bg-[#304859] `}
+            className={`flex justify-center text-center font-bold text-2xl text-white aspect-square rounded-[59px] bg-[#304859] `}
             style={{
               transition: "all 0.2s ease-in 0.2s",
               transform: "rotateY(0deg)",

@@ -51,5 +51,3 @@ const useTimer = (allMatched) => {
 };
 
 export default useTimer;
-
-// restarttimershi shignit meweraba sawyisze dabruneba wutebisac da wamebisac
