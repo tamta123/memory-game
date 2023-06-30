@@ -26,7 +26,7 @@ const SetupPage = () => {
         <h2 className=" font-bold text-base md:text-[20px] leading-[19px] text-[#7191A5] pb-3 md:pb-4">
           Select Theme
         </h2>
-        <div className="flex justify-between md:w-full">
+        <div className="flex justify-between md:w-full gap-2">
           <button
             className={`h-10 md:h-[52px] w-[134px] md:w-[257px] rounded-[26px] font-bold text-sm md:text-[26px] md:py-[13px] text-[#FCFCFC] ${
               theme === "numbers" ? "bg-[#304859]" : "bg-[#BCCED9]"
@@ -47,7 +47,7 @@ const SetupPage = () => {
         <h2 className=" font-bold  md:text-[20px]  text-base leading-[19px] text-[#7191A5] pb-3 pt-6 md:pb-4 md:pt-[32px]">
           Numbers of Players
         </h2>
-        <div className="flex justify-between ">
+        <div className="flex justify-between gap-2">
           <button
             className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
               playerMode === "1" ? "bg-[#304859]" : "bg-[#BCCED9]"
@@ -84,7 +84,7 @@ const SetupPage = () => {
         <h2 className="md:text-[20px]  font-bold text-base leading-[19px] text-[#7191A5] pb-3 pt-6 md:pb-4 md:pt-[32px]">
           Grid Size
         </h2>
-        <div className="flex justify-between  pb-8">
+        <div className="flex justify-between  pb-8 gap-2">
           <button
             className={`h-10   md:h-[52px] md:w-[257px] md:text-[26px] md:py-[13px] w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC]  ${
               gridSize === 8 ? "bg-[#304859]" : "bg-[#BCCED9]"

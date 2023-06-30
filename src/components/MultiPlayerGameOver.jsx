@@ -10,10 +10,12 @@ const MultiPlayerGameOver = ({
   setTimerStarted,
   setAllMatched,
   setIsMenuOpen,
+  setPlayers,
 }) => {
   const navigate = useNavigate();
 
   const handleRestart = () => {
+    console.log("press restart");
     // Logic for restarting the game
     const newCards = generate(); // Generate a new set of cards
     setCards(newCards);
@@ -23,7 +25,23 @@ const MultiPlayerGameOver = ({
     setTimerStarted(false);
     setAllMatched(false);
     setIsMenuOpen(false); // Close the modal
+    // Update the players state to set the first player as active
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers.map((player, index) => {
+        return {
+          ...player,
+          active: index === 0, // Set the first player as active (index === 0)
+          matched: 0, // Reset the matched count for all players
+        };
+      });
+      return updatedPlayers;
+    });
   };
+  const temporary = () => {
+    console.log("clicked");
+  };
+
+  console.log("tamta");
 
   const handleNewGame = () => {
     navigate("/");

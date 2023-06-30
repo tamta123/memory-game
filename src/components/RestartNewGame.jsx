@@ -10,6 +10,7 @@ const RestartNewGame = ({
   setAllMatched,
   setIsMenuOpen,
   restartTimer,
+  setPlayers,
 }) => {
   const navigate = useNavigate();
 
@@ -24,6 +25,16 @@ const RestartNewGame = ({
     setAllMatched(false);
     setIsMenuOpen(false); // Close the modal
     restartTimer();
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers.map((player, index) => {
+        return {
+          ...player,
+          active: index === 0, // Set the first player as active (index === 0)
+          matched: 0, // Reset the matched count for all players
+        };
+      });
+      return updatedPlayers;
+    });
   };
 
   const handleNewGame = () => {

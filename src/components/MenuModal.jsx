@@ -11,6 +11,7 @@ const MenuModal = ({
   setIsMenuOpen,
   restartTimer,
   resumeTimer,
+  setPlayers,
 }) => {
   const navigate = useNavigate();
 
@@ -25,6 +26,17 @@ const MenuModal = ({
     setAllMatched(false);
     setIsMenuOpen(false); // Close the modal
     restartTimer();
+    // Update the players state to set the first player as active
+    setPlayers((prevPlayers) => {
+      const updatedPlayers = prevPlayers.map((player, index) => {
+        return {
+          ...player,
+          active: index === 0, // Set the first player as active (index === 0)
+          matched: 0, // Reset the matched count for all players
+        };
+      });
+      return updatedPlayers;
+    });
   };
 
   const handleNewGame = () => {

@@ -318,6 +318,7 @@ const Game = () => {
             setAllMatched={setAllMatched}
             setIsMenuOpen={setIsMenuOpen}
             generate={generate}
+            setPlayers={setPlayers}
           />
         </div>
       </div>
@@ -408,6 +409,7 @@ const Game = () => {
           stopTimer={stopTimer}
           restartTimer={restartTimer}
           resumeTimer={resumeTimer}
+          setPlayers={setPlayers}
         />
       )}
       {allMatched && playerMode == 1 && (
@@ -439,6 +441,7 @@ const Game = () => {
           setTimerStarted={setTimerStarted}
           setAllMatched={setAllMatched}
           setIsMenuOpen={setIsMenuOpen}
+          setPlayers={setPlayers}
         />
       )}
     </>
