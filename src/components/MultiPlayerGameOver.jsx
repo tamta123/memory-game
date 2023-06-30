@@ -48,7 +48,7 @@ const MultiPlayerGameOver = ({
   return (
     <>
       <div className="fixed left-0 top-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center">
-        <div className="flex flex-col gap-[16px] w-[90%] h-[auto] bg-[#F2F2F2] rounded-[10px] p-[24px] m-auto">
+        <div className="flex flex-col gap-[16px] w-[90%] md:w-[85%] h-[auto] bg-[#F2F2F2] rounded-[10px] p-[24px] md:px-[56px] m-auto">
           <span className="text-[#152938] text-center text-2xl font-bold">
             {winnerMessage}
           </span>
@@ -62,7 +62,7 @@ const MultiPlayerGameOver = ({
                   winners.includes(player)
                     ? "bg-[#152938] text-[#FCFCFC]"
                     : "bg-[#DFE7EC]"
-                } flex justify-between items-center px-4 rounded-[5px] mb-2`}
+                } flex justify-between items-center px-4 rounded-[5px] mb-2 md:mb-4`}
                 key={index}
               >
                 <span
@@ -87,18 +87,20 @@ const MultiPlayerGameOver = ({
               </div>
             ))}
           </div>
-          <button
-            className="w-full h-[48px] bg-[#FDA214] rounded-[26px] font-bold text-xl leading-6 text-center text-white flex items-center justify-center"
-            onClick={handleRestart}
-          >
-            Restart
-          </button>
-          <button
-            className="w-full h-[48px] bg-[#DFE7EC] rounded-[26px] font-bold text-xl leading-6 text-center text-[#304859] flex items-center justify-center"
-            onClick={handleNewGame}
-          >
-            New Game
-          </button>
+          <div className="md:flex md:gap-4">
+            <button
+              className="w-full h-[48px] bg-[#FDA214] rounded-[26px] font-bold text-xl leading-6 text-center text-white flex items-center justify-center"
+              onClick={handleRestart}
+            >
+              Restart
+            </button>
+            <button
+              className="w-full h-[48px] bg-[#DFE7EC] rounded-[26px] font-bold text-xl leading-6 text-center text-[#304859] flex items-center justify-center"
+              onClick={handleNewGame}
+            >
+              New Game
+            </button>
+          </div>
         </div>
       </div>
     </>

@@ -5,6 +5,8 @@ import MenuModal from "./MenuModal";
 import FinishModal from "./FinishModal";
 import useTimer from "./useTimer";
 import MultiPlayerGameOver from "./MultiPlayerGameOver.jsx";
+import RestartNewGame from "./RestartNewGame";
+
 import {
   faTree,
   faStar,
@@ -41,9 +43,22 @@ const Game = () => {
   const [allMatched, setAllMatched] = useState(false); // Declare allMatched state
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [players, setPlayers] = useState([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
 
   const { minutes, seconds, finished, stopTimer, restartTimer, resumeTimer } =
     useTimer(allMatched);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const generate = () => {
     const icons = [
@@ -279,12 +294,12 @@ const Game = () => {
 
   return (
     <>
-      <div className="flex justify-between px-6 pt-6">
-        <h1 className="font-bold text-xl leading-7 text-center text-[#152938]">
+      <div className="flex justify-between px-6 pt-6 md:px-10 md:pt-9 lg:px-[165px] lg:pt-[68px]">
+        <h1 className="font-bold text-xl  md:text-[40px] leading-7 text-center text-[#152938]">
           memory
         </h1>
         <button
-          className=" bg-[#FDA214] rounded-[26px] px-5 py-3 font-bold text-base leading-5 text-center text-white"
+          className=" md:hidden bg-[#FDA214] rounded-[26px] px-5 py-3 font-bold text-base leading-5 text-center text-white"
           onClick={() => {
             setIsMenuOpen(!isMenuOpen);
             stopTimer();
@@ -292,13 +307,26 @@ const Game = () => {
         >
           menu
         </button>
+        <div className="hidden md:flex md:gap-[16px] md:w-[40%] ">
+          <RestartNewGame
+            restartTimer={restartTimer}
+            setCards={setCards}
+            setSelectedCard={setSelectedCard}
+            setDisableButtons={setDisableButtons}
+            setMoveCount={setMoveCount}
+            setTimerStarted={setTimerStarted}
+            setAllMatched={setAllMatched}
+            setIsMenuOpen={setIsMenuOpen}
+            generate={generate}
+          />
+        </div>
       </div>
       <div
-        className={
+        className={`md:px-[118px] md:pt-[158px] lg:px-[454px] lg:pt-[106px] lg:pb-[122px] ${
           +gridSize === 18
             ? "text-white grid gap-5 px-6 pt-[85px] grid-cols-6 "
             : "text-white grid gap-5 px-6 pt-[85px] grid-cols-4"
-        }
+        }`}
       >
         {cards.map((card, index) => (
           <div key={index} className="">
@@ -312,12 +340,12 @@ const Game = () => {
         ))}
       </div>
       {playerMode <= 1 ? (
-        <div className="flex gap-6 px-6 pb-6 pt-[102px]">
-          <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
-            <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
+        <div className="flex gap-6 px-6 pb-6 pt-[102px] md:px-[118px] lg:p-0 lg:px-[450px] ">
+          <div className="flex flex-col md:flex-row md:justify-between md:px-[21px] justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
+            <span className="font-bold text-base  leading-normal text-center text-[#7191A5]">
               Time
             </span>
-            <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
+            <span className="font-bold text-2xl leading-7 text-center md:text-[32px] text-[#304859]">
               {timerStarted ? (
                 <div className="">
                   {minutes.toString().padStart(2, "0")}:
@@ -328,34 +356,36 @@ const Game = () => {
               )}
             </span>
           </div>
-          <div className="flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px]">
+          <div className="flex flex-col  md:flex-row md:justify-between md:px-[21px] justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px] ">
             <span className="font-bold text-base leading-normal text-center text-[#7191A5]">
               Moves
             </span>
-            <span className="font-bold text-2xl leading-7 text-center text-[#304859]">
+            <span className="font-bold text-2xl leading-7 text-center md:text-[32px] text-[#304859]">
               {moveCount}
             </span>
           </div>
         </div>
       ) : (
         // Render the player information for multiplayer mode
-        <div className={`flex gap-6 px-6 pb-6 pt-[102px]  `}>
+        <div
+          className={`flex gap-6 px-6 pb-6 pt-[102px] md:px-[118px] lg:pt-0 `}
+        >
           {players.map((player, index) => (
             <div
               key={index}
-              className={`flex flex-col justify-center items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px] ${
+              className={`flex flex-col md:justify-start justify-center md:items-start items-center h-[70px] w-[46%] bg-[#DFE7EC] rounded-[5px] md:px-4 md:pt-3 lg:flex-row lg:justify-between lg:items-center ${
                 player.active ? "bg-[#FDA214] text-[#ffffff]" : "bg-[#DFE7EC]"
               }`}
             >
               <span
-                className={`font-bold text-base leading-normal text-center  ${
+                className={`font-bold text-base leading-normal text-center lg:text-[18px] ${
                   player.active ? " text-[#ffffff]" : "text-[#7191A5]"
                 }`}
               >
                 P {index + 1}
               </span>
               <span
-                className={`font-bold text-2xl leading-7 text-center  ${
+                className={`font-bold text-2xl leading-7 text-center lg:text-[32px] ${
                   player.active ? " text-[#ffffff]" : "text-[#304859]"
                 }`}
               >
@@ -365,7 +395,7 @@ const Game = () => {
           ))}
         </div>
       )}
-      {isMenuOpen && (
+      {isMenuOpen && isSmallScreen && (
         <MenuModal
           generate={generate}
           setCards={setCards}

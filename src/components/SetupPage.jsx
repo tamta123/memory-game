@@ -18,17 +18,17 @@ const SetupPage = () => {
   };
 
   return (
-    <div className="h-[100vh] w-full bg-[#152938]">
-      <h1 className="text-center text-white font-bold text-3xl pt-20 mb-11 mx-[127px]">
+    <div className="h-[100vh] w-full bg-[#152938] flex justify-center flex-col items-center">
+      <h1 className="text-center text-white font-bold text-3xl pt-20 mb-11 mx-[127px]  md:pb-[78px] md:text-[40px] md:m-0">
         memory
       </h1>
-      <div className="bg-white rounded-[10px] mx-6 p-6">
-        <h2 className=" font-bold text-base leading-[19px] text-[#7191A5] pb-3">
+      <div className="bg-white  flex flex-col justify-center  rounded-[10px] mx-6 p-6  md:px-[57px] lg:w-[50%] lg:px-[80px] lg:py-[50px]">
+        <h2 className=" font-bold text-base md:text-[20px] leading-[19px] text-[#7191A5] pb-3 md:pb-4">
           Select Theme
         </h2>
-        <div className="flex gap-3">
+        <div className="flex justify-between md:w-full">
           <button
-            className={`h-10 w-[134px]  rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 md:h-[52px] w-[134px] md:w-[257px] rounded-[26px] font-bold text-sm md:text-[26px] md:py-[13px] text-[#FCFCFC] ${
               theme === "numbers" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setTheme("numbers")}
@@ -36,7 +36,7 @@ const SetupPage = () => {
             Numbers
           </button>
           <button
-            className={`h-10 w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 md:h-[52px] w-[134px] md:w-[257px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] md:py-[13px] text-[#FCFCFC] ${
               theme === "icons" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setTheme("icons")}
@@ -44,12 +44,12 @@ const SetupPage = () => {
             Icons
           </button>
         </div>
-        <h2 className=" font-bold text-base leading-[19px] text-[#7191A5] pb-3 pt-6">
+        <h2 className=" font-bold  md:text-[20px]  text-base leading-[19px] text-[#7191A5] pb-3 pt-6 md:pb-4 md:pt-[32px]">
           Numbers of Players
         </h2>
-        <div className="flex gap-3">
+        <div className="flex justify-between ">
           <button
-            className={`h-10 w-[60px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
               playerMode === "1" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("1")}
@@ -57,7 +57,7 @@ const SetupPage = () => {
             1
           </button>
           <button
-            className={`h-10 w-[60px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
               playerMode === "2" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("2")}
@@ -65,7 +65,7 @@ const SetupPage = () => {
             2
           </button>
           <button
-            className={`h-10 w-[60px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
               playerMode === "3" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("3")}
@@ -73,7 +73,7 @@ const SetupPage = () => {
             3
           </button>
           <button
-            className={`h-10 w-[60px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
               playerMode === "4" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("4")}
@@ -81,12 +81,12 @@ const SetupPage = () => {
             4
           </button>
         </div>
-        <h2 className=" font-bold text-base leading-[19px] text-[#7191A5] pb-3 pt-6">
+        <h2 className="md:text-[20px]  font-bold text-base leading-[19px] text-[#7191A5] pb-3 pt-6 md:pb-4 md:pt-[32px]">
           Grid Size
         </h2>
-        <div className="flex gap-3 pb-8">
+        <div className="flex justify-between  pb-8">
           <button
-            className={`h-10 w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC]  ${
+            className={`h-10   md:h-[52px] md:w-[257px] md:text-[26px] md:py-[13px] w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC]  ${
               gridSize === 8 ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setGridSize(8)}
@@ -94,7 +94,7 @@ const SetupPage = () => {
             4x4
           </button>
           <button
-            className={`h-10 w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 md:h-[52px] md:w-[257px] md:text-[26px] md:py-[13px] w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
               gridSize === 18 ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setGridSize(18)}
@@ -103,7 +103,7 @@ const SetupPage = () => {
           </button>
         </div>
         <button
-          className="w-full h-12 bg-[#FDA214] rounded-[26px] font-bold text-sm text-[#FCFCFC] items-center"
+          className="w-full h-12 bg-[#FDA214] rounded-[26px] md:rounded-[35px] font-bold text-sm md:text-[32px] md:h-[70px] text-[#FCFCFC] items-center"
           onClick={handleStartGame}
         >
           Start Game

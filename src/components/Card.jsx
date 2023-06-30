@@ -12,7 +12,9 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
         card.isFaceUp ? (
           <div
             className={`flex justify-center aspect-square rounded-[59px]  text-center font-bold text-2xl text-white card ${
-              +gridSize === 18 ? "text-xl " : "text-2xl leading-10"
+              +gridSize === 18
+                ? "text-xl md:text-[44px]"
+                : "text-2xl md:text-[60px] leading-10"
             } 
             ${
               card.matched ? "bg-[#BCCED9]" : "bg-[#FDA214]"
@@ -55,8 +57,8 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
             className={` 
            ${
              +gridSize === 8
-               ? "scale-[1.5] translate-y-[100%]"
-               : "scale-[0.9] translate-y-[40%]"
+               ? "scale-[1.5] translate-y-[100%] md:text-[44px] "
+               : "scale-[0.9] translate-y-[40%] md:text-[36px] "
            }`}
             icon={card.value}
           />
