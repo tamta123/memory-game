@@ -11,7 +11,7 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
       {theme === "numbers" ? (
         card.isFaceUp ? (
           <div
-            className={`flex justify-center aspect-square rounded-[59px]  text-center font-bold text-2xl text-white card ${
+            className={`flex justify-center aspect-square rounded-[59px]  text-center font-bold text-2xl text-white card cursor-pointer ${
               +gridSize === 18
                 ? "text-xl md:text-[44px]"
                 : "text-2xl md:text-[60px] leading-10"
@@ -35,7 +35,7 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
           </div>
         ) : (
           <div
-            className={`flex justify-center text-center font-bold text-2xl text-white aspect-square rounded-[59px] bg-[#304859] `}
+            className={`flex justify-center text-center font-bold text-2xl text-white aspect-square rounded-[59px] bg-[#304859] hover:bg-[#6395B8] cursor-pointer`}
             style={{
               transition: "all 0.2s ease-in 0.2s",
               transform: "rotateY(0deg)",
@@ -45,7 +45,7 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
         )
       ) : card.isFaceUp ? (
         <div
-          className={`flex justify-center font-bold text-2xl leading-10 aspect-square rounded-[59px] text-center card  ${
+          className={`flex justify-center font-bold text-2xl leading-10 aspect-square rounded-[59px] text-center card  cursor-pointer ${
             card.matched ? "bg-[#BCCED9]" : "bg-[#FDA214]"
           }`}
           style={{
@@ -65,7 +65,7 @@ const Card = ({ card, theme, handleMatch, gridSize }) => {
         </div>
       ) : (
         <div
-          className={`aspect-square rounded-[59px] bg-[#304859] `}
+          className={`aspect-square rounded-[59px] bg-[#304859] hover:bg-[#6395B8] cursor-pointer `}
           onClick={handleClick}
           style={{
             transition: "all 0.2s ease-in 0.2s",

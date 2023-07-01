@@ -44,13 +44,13 @@ const RestartNewGame = ({
   return (
     <div className="md:flex md:gap-[16px] ">
       <button
-        className=" bg-[#FDA214] rounded-[26px]  w-auto px-5  py-3 font-bold text-[20px] leading-5 text-center text-white"
+        className=" bg-[#FDA214] rounded-[26px]  w-auto px-5  py-3 font-bold text-[20px] leading-5 text-center text-white cursor-pointer "
         onClick={handleRestart}
       >
         Restart
       </button>
       <button
-        className=" bg-[#DFE7EC] rounded-[26px] w-auto px-5  py-3 font-bold text-[20px] leading-5 text-center text-[#304859]"
+        className=" bg-[#DFE7EC] rounded-[26px] w-auto px-5  py-3 font-bold text-[20px] leading-5 text-center text-[#304859] cursor-pointer hover:bg-[#6395B8]"
         onClick={handleNewGame}
       >
         New Game

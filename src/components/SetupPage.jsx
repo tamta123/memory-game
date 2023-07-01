@@ -28,7 +28,7 @@ const SetupPage = () => {
         </h2>
         <div className="flex justify-between md:w-full gap-2">
           <button
-            className={`h-10 md:h-[52px] w-[134px] md:w-[257px] rounded-[26px] font-bold text-sm md:text-[26px] md:py-[13px] text-[#FCFCFC] ${
+            className={`h-10 md:h-[52px] w-[134px] md:w-[257px] rounded-[26px] font-bold text-sm md:text-[26px] md:py-[13px] text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               theme === "numbers" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setTheme("numbers")}
@@ -36,7 +36,7 @@ const SetupPage = () => {
             Numbers
           </button>
           <button
-            className={`h-10 md:h-[52px] w-[134px] md:w-[257px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] md:py-[13px] text-[#FCFCFC] ${
+            className={`h-10 md:h-[52px] w-[134px] md:w-[257px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] md:py-[13px] text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               theme === "icons" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setTheme("icons")}
@@ -49,7 +49,7 @@ const SetupPage = () => {
         </h2>
         <div className="flex justify-between gap-2">
           <button
-            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               playerMode === "1" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("1")}
@@ -57,7 +57,7 @@ const SetupPage = () => {
             1
           </button>
           <button
-            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               playerMode === "2" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("2")}
@@ -65,7 +65,7 @@ const SetupPage = () => {
             2
           </button>
           <button
-            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               playerMode === "3" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("3")}
@@ -73,7 +73,7 @@ const SetupPage = () => {
             3
           </button>
           <button
-            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] ${
+            className={`h-10 w-[66px] md:h-[52px] md:w-[119px] bg-[#304859] rounded-[26px] font-bold text-sm md:text-[26px] text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               playerMode === "4" ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setPlayerMode("4")}
@@ -86,7 +86,7 @@ const SetupPage = () => {
         </h2>
         <div className="flex justify-between  pb-8 gap-2">
           <button
-            className={`h-10   md:h-[52px] md:w-[257px] md:text-[26px] md:py-[13px] w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC]  ${
+            className={`h-10   md:h-[52px] md:w-[257px] md:text-[26px] md:py-[13px] w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               gridSize === 8 ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setGridSize(8)}
@@ -94,7 +94,7 @@ const SetupPage = () => {
             4x4
           </button>
           <button
-            className={`h-10 md:h-[52px] md:w-[257px] md:text-[26px] md:py-[13px] w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] ${
+            className={`h-10 md:h-[52px] md:w-[257px] md:text-[26px] md:py-[13px] w-[134px] bg-[#304859] rounded-[26px] font-bold text-sm text-[#FCFCFC] cursor-pointer hover:bg-[#6395B8] ${
               gridSize === 18 ? "bg-[#304859]" : "bg-[#BCCED9]"
             }`}
             onClick={() => setGridSize(18)}
@@ -103,7 +103,7 @@ const SetupPage = () => {
           </button>
         </div>
         <button
-          className="w-full h-12 bg-[#FDA214] rounded-[26px] md:rounded-[35px] font-bold text-sm md:text-[32px] md:h-[70px] text-[#FCFCFC] items-center"
+          className="w-full h-12 bg-[#FDA214] rounded-[26px] md:rounded-[35px] font-bold text-sm md:text-[32px] md:h-[70px] text-[#FCFCFC] items-center cursor-pointer hover:bg-[#FFB84A]"
           onClick={handleStartGame}
         >
           Start Game
