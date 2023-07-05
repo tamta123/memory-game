@@ -29,8 +29,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Game = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const location = useLocation(); // location object represents the current url location in the browser, it is obtained from useLocation hook
+  const searchParams = new URLSearchParams(location.search); // searchParam has the location search property example "http://localhost:5173/game?theme=icons&playerMode=3&gridSize=8"
   const theme = searchParams.get("theme");
   const playerMode = searchParams.get("playerMode");
   const gridSize = searchParams.get("gridSize");
@@ -45,7 +45,7 @@ const Game = () => {
   const [players, setPlayers] = useState([]);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
 
-  const { minutes, seconds, finished, stopTimer, restartTimer, resumeTimer } =
+  const { minutes, seconds, stopTimer, restartTimer, resumeTimer } =
     useTimer(allMatched);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const Game = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, []); // The effect is set up without any dependencies array, so it will only run once after the initial render. However, the effect will continue to work because the handleResize function is defined within the component's scope and has access to the isSmallScreen state variable.
 
   const generate = () => {
     const icons = [
@@ -80,14 +80,15 @@ const Game = () => {
       faIceCream,
       faLaptopFile,
       faFire,
-    ];
+    ]; // icons array from max 18 icons
 
     const numbersArray = [];
     for (let i = 1; i <= gridSize; i++) {
       numbersArray.push({ value: i, id: i, isFaceUp: false, matched: false });
     }
+    //numbersArray consists of 8 or 18 numbers, because 4x4=16/2=8 and 6x6=36/2=18
 
-    const doubledArray = [...numbersArray, ...numbersArray];
+    const doubledArray = [...numbersArray, ...numbersArray]; //to find match
 
     const iconsArray = doubledArray.map((number, index) => {
       return {
@@ -96,7 +97,7 @@ const Game = () => {
         isFaceUp: false,
         matched: false,
       };
-    });
+    }); // it generates doubled icons array from doubled numbers array (18 or 36), ([number.value - 1], number's value begins from 1, thats why we subtract 1 to access the icon with 0 index)
 
     let finalArray;
 
@@ -111,6 +112,8 @@ const Game = () => {
       finalArray = iconsArray;
     }
 
+    //we create finalArray variable, it theme is number it returns number.... idea is not to shuffle numbers and icons arrays separately
+
     const shuffledArray = finalArray.sort((a, b) => 0.5 - Math.random());
     setCards(shuffledArray);
 
@@ -119,7 +122,7 @@ const Game = () => {
 
   useEffect(() => {
     const newCards = generate();
-  }, []);
+  }, []); // useEffect function generates new set of cards when the components initially rendered (empty array stands for this),
 
   useEffect(() => {
     const initialPlayers = Array.from({ length: playerMode }, (_, index) => ({
@@ -127,8 +130,10 @@ const Game = () => {
       matched: 0,
       active: index === 0,
     }));
-    setPlayers(initialPlayers);
-  }, [playerMode]);
+    setPlayers(initialPlayers); // function to update the state with the initial player data.
+  }, [playerMode]); //this ensures that the players are re-initialized whenever the number of players changes
+  //this hook is in response of providing initial player with respect to the player mode (1/2/3/4), this is for the multiple players game
+  //array of initial players is created by array.from method.the length of the array depends on the number of players(playerMode), first player is active initially
 
   const handleMatch = (card) => {
     if (playerMode <= 1) {
@@ -141,7 +146,7 @@ const Game = () => {
   const handleSingleMatch = (card) => {
     if (!timerStarted) {
       setTimerStarted(true);
-    }
+    } // timer should start from the first click
     if (disableButtons) {
       // Disable clicking on cards while the delay is in progress
       return;
@@ -189,12 +194,13 @@ const Game = () => {
           });
           setCards(flippedCards);
           setDisableButtons(false); // Enable clicking on cards after the delay
-        }, 1000); // Delay to show the cards for 0.5 second before flipping back
+        }, 1000); // Delay to show the cards for 1 second before flipping back
       }
       setSelectedCard(null);
       setMoveCount((count) => count + 1); // Increment the move count
     }
   };
+  // generate function is for creating numbers and icons array and that has object inside with following keys: value, id, faceup, match
 
   const handleMultiPlayerMatch = (card) => {
     if (disableButtons) {
@@ -268,7 +274,8 @@ const Game = () => {
             (participant) => participant.active
           );
           const nextParticipantIndex =
-            (activeParticipantIndex + 1) % prevPlayers.length;
+            (activeParticipantIndex + 1) % prevPlayers.length; //The modulus operator % is used to wrap the resulting index within the valid range of indices (from 0 to prevPlayers.length - 1).
+          //If the resulting index exceeds the maximum index in the list, it wraps around to the first participant, creating a circular behavior.
           return prevPlayers.map((participant, index) => {
             if (index === activeParticipantIndex) {
               return { ...participant, active: false };

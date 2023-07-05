@@ -66,7 +66,7 @@ const MultiPlayerGameOver = ({
   return (
     <>
       <div className="fixed left-0 top-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] flex items-center justify-center">
-        <div className="flex flex-col gap-[16px] w-[90%] md:w-[85%] h-[auto] bg-[#F2F2F2] rounded-[10px] p-[24px] md:px-[56px] m-auto">
+        <div className="flex flex-col gap-[16px] w-[90%] md:w-[85%] h-[auto] bg-[#F2F2F2] rounded-[10px] p-[24px] md:px-[56px] m-auto lg:w-[40%]">
           <span className="text-[#152938] text-center text-2xl font-bold">
             {winnerMessage}
           </span>
